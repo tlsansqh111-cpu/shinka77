@@ -9,10 +9,10 @@
   <body>
     <header>
       <nav>
-        <a href="#">Home</a>
-        <a href="#">about</a>
-        <a href="#">Gallery</a>
-        <a href="#">PolitPolio</a>
+        <a href="index.html">Home</a>
+        <a href="#about">about</a>
+        <a href="../gallery/index.html">Gallery</a>
+        <a href="#politpolio">PolitPolio</a>
         <a href="#" class="icon">🌐</a>
       </nav>
     </header>
@@ -27,7 +27,7 @@
     </section>
 
     <main class="container">
-      <section class="card about-card">
+      <section class="card about-card" id="about">
         <div class="profile-img">
           <img src="profilo.jpg" alt="Profile" />
         </div>
@@ -56,31 +56,33 @@
         </div>
       </section>
 
-      <section class="card portfolio-card">
+      <section class="card portfolio-card" id="politpolio">
         <h2>Portpolio</h2>
-        <div class="more-link">
-          <div class="portfolio-grid">
-            <div class="item item-web">
-              <img src="noworkbee.jpg" alt="WEB UX/UI" />
-              <span class="item-text">WEB UX/UI</span>
-            </div>
-            <div class="item item-ai">
-              <img src="aimp.jpg" alt="AI 역량" />
-              <span class="item-text">AI 역량</span>
-            </div>
-            <div class="item item-product">
-              <img src="dddf.jpg" alt="제품 디자인" />
-              <span class="item-text">제품 디자인</span>
-            </div>
-            <div class="item item-character">
-              <img src="일러스트 북 내지-11.jpg" alt="캐릭터 디자인" />
-              <span class="item-text">캐릭터 디자인</span>
-            </div>
-            <div class="item item-web">
-              <img src="web-image.jpg" alt="편집 디자인" />
-              <span class="item-edit">편집 디자인</span>
-            </div>
+
+        <div class="portfolio-grid">
+          <div class="item item-web">
+            <img src="noworkbee.jpg" alt="WEB UX/UI" />
+            <span class="item-text">WEB UX/UI</span>
           </div>
+          <div class="item item-ai">
+            <img src="aimp.jpg" alt="AI 역량" />
+            <span class="item-text">AI 역량</span>
+          </div>
+          <div class="item item-product">
+            <img src="dddf.jpg" alt="제품 디자인" />
+            <span class="item-text">제품 디자인</span>
+          </div>
+          <div class="item item-character">
+            <img src="일러스트 북 내지-11.jpg" alt="캐릭터 디자인" />
+            <span class="item-text">캐릭터 디자인</span>
+          </div>
+          <div class="item item-edit">
+            <img src="ed.jpg" alt="편집 디자인" />
+            <span class="item-text">편집 디자인</span>
+          </div>
+        </div>
+
+        <div class="more-link">
           <a href="#">Portpolio 더보기</a>
         </div>
       </section>
@@ -119,6 +121,6 @@
 
     <footer class="footer"></footer>
 
-    <script src="/.shinka77.js"></script>
+    <script src="./.shinka77.js"></script>
   </body>
 </html>
