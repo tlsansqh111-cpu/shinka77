@@ -10,27 +10,23 @@
     <header class="gallery-header">
       <nav class="pill-nav">
         <a href="../main/index.html">Home</a>
-
         <a href="../main/index.html#about">about</a>
-
         <a href="index.html" class="active">Gallery</a>
-
         <a href="../main/index.html#politpolio">PolitPolio</a>
-
-        <span class="icon-box"></span>
-        <span class="icon-box"></span>
+        <div class="icon-group">
+          <span class="square-icon"></span>
+          <span class="square-icon"></span>
+        </div>
       </nav>
     </header>
 
-    <main>
-      <section class="intro-section">
-        <h2>
-          THE PASSION IS TO CREATE IN OUR INDIVIDUAL<br />
-          STYLE DIGITAL ART INCLUDING PHOTO EDITING,<br />
-          COLLAGES, ILLUSTRATIONS, TEXTILE AND PATTERN<br />
-          DESIGN.
-        </h2>
-      </section>
+    <main class="gallery-main">
+      <h2 class="main-slogan">
+        THE PASSION IS TO CREATE IN OUR INDIVIDUAL<br />
+        STYLE DIGITAL ART INCLUDING PHOTO EDITING,<br />
+        COLLAGES, ILLUSTRATIONS, TEXTILE AND PATTERN<br />
+        DESIGN.
+      </h2>
 
       <section class="focus-section">
         <div class="text-left">
@@ -40,8 +36,11 @@
           </p>
         </div>
 
-        <div class="center-image">
-          <img src="center-art.jpg" alt="Featured Art" />
+        <div class="center-image-wrapper">
+          <img
+            src="https://placehold.co/400x400/e0f4ff/0c3851?text=Center+Art"
+            alt="Featured Art"
+          />
         </div>
 
         <div class="text-right">
@@ -52,37 +51,62 @@
             >
           </p>
         </div>
-    <section class="project-section">
-            <h3 class="project-title">our Project</h3>
-            
-            <div class="horizontal-scroll-container" id="projectContainer">
-                <div class="masonry-track">
-                    <div class="masonry-item"><img src="proj1.jpg" alt="Project 1"></div>
-                    <div class="masonry-item"><img src="proj2.jpg" alt="Project 2"></div>
-                    
-                    <div class="masonry-item"><img src="proj3.jpg" alt="Project 3"></div>
-                    <div class="masonry-item"><img src="proj4.jpg" alt="Project 4"></div>
-                    
-                    <div class="masonry-item"><img src="proj5.jpg" alt="Project 5"></div>
-                    <div class="masonry-item">
-                        <video autoplay loop muted playsinline>
-                            <source src="your-video-file.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    
-                    <div class="masonry-item"><img src="proj7.jpg" alt="Project 7"></div>
-                    <div class="masonry-item"><img src="proj8.jpg" alt="Project 8"></div>
-                    
-                    <div class="masonry-item"><img src="proj9.jpg" alt="Project 9"></div>
-                    <div class="masonry-item"><img src="proj10.jpg" alt="Project 10"></div>
-                    
-                    <div class="masonry-item"><img src="proj11.jpg" alt="Project 11"></div>
-                    <div class="masonry-item"><img src="proj12.jpg" alt="Project 12"></div>
-                </div>
-                
-                <div class="fade-overlay"></div>
+      </section>
+
+      <section class="project-section">
+        <h3 class="project-title">our Project</h3>
+
+        <div class="scroll-container" id="projectContainer">
+          <div class="scroll-rows">
+            <div class="row">
+              <img src="KakaoTalk_20251117_032913451_01.png" alt="Work 1" />
+              <img src="KakaoTalk_20251117_033617504.png" alt="Work 2" />
+              <img src="KakaoTalk_20251218_121913532.png" alt="Work 3" />
+              <img src="화면 캡처 2026-02-26 162925.jpg" alt="Work 4" />
+              <img
+                src="https://placehold.co/420x260/dddddd/555555?text=Work+5"
+                alt="Work 5"
+              />
+              <img
+                src="https://placehold.co/300x260/dddddd/555555?text=Work+6"
+                alt="Work 6"
+              />
             </div>
-        </section>
+
+            <div class="row">
+              <img
+                src="https://placehold.co/400x260/dddddd/555555?text=Work+7"
+                alt="Work 7"
+              />
+              <img
+                src="https://placehold.co/320x260/dddddd/555555?text=Work+8"
+                alt="Work 8"
+              />
+
+              <div class="video-placeholder">
+                <video autoplay loop muted playsinline>
+                  <source src="your-video.mp4" type="video/mp4" />
+                </video>
+                <span>Video Area</span>
+              </div>
+
+              <img
+                src="https://placehold.co/350x260/dddddd/555555?text=Work+10"
+                alt="Work 10"
+              />
+              <img
+                src="https://placehold.co/280x260/dddddd/555555?text=Work+11"
+                alt="Work 11"
+              />
+              <img
+                src="https://placehold.co/450x260/dddddd/555555?text=Work+12"
+                alt="Work 12"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="bottom-fade"></div>
+      </section>
     </main>
 
     <script src="./gallery.js"></script>
