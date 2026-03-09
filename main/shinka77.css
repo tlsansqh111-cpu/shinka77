@@ -70,7 +70,7 @@ header nav a:hover {
   object-fit: cover;
   z-index: -1;
 
-  box-shadow: 0 100px px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 100px px rgba(0, 0, 0, 0.7);
 }
 .logo-text {
   font-size: 8rem;
