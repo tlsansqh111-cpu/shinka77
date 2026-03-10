@@ -3,7 +3,6 @@ const dragWrapper = document.getElementById("dragWrapper");
 
 // 드래그 상태 및 좌표 변수
 let isDragging = false;
-let startY;
 let currentTransform = -50; // 초기 CSS transform: translateY(-50%) 에 맞춤
 let currentY = 0;
 
@@ -51,3 +50,65 @@ window.addEventListener("mousemove", (e) => {
   // 화면에 실시간으로 위치 적용
   dragWrapper.style.transform = `translateY(calc(${currentTransform}% + ${moveY}px))`;
 });
+
+// 테스트
+
+c; /* --- 기존 JS 드래그 로직을 모두 지우고 아래 코드로 교체하세요 --- */
+
+const stack = document.querySelector(".card-stack");
+let startY = 0;
+let currentCard = null;
+
+stack.addEventListener("mousedown", (e) => {
+  // 브라우저의 기본 이미지 드래그 현상 방지
+  e.preventDefault();
+
+  // 항상 스택의 제일 위에 있는(첫 번째) 카드를 선택
+  currentCard = stack.querySelector(".card:first-child");
+  startY = e.clientY;
+
+  // 마우스 이동 시 부드럽게 따라오도록 transition 임시 해제
+  currentCard.style.transition = "none";
+
+  document.onmousemove = drag;
+  document.onmouseup = stopDrag;
+});
+
+function drag(e) {
+  let move = e.clientY - startY;
+
+  // 위로 올릴 때만 반응하도록 설정 (필요시 양방향으로 변경 가능)
+  if (move < 0) {
+    currentCard.style.transform = `translateY(${move}px)`;
+  }
+}
+
+function stopDrag(e) {
+  let move = e.clientY - startY;
+
+  // 다시 부드러운 전환 효과 복구
+  currentCard.style.transition =
+    "transform 0.3s, opacity 0.3s, top 0.3s, left 0.3s";
+
+  // 위로 100px 이상 드래그했을 경우 (카드 넘기기 성공)
+  if (move < -100) {
+    currentCard.style.opacity = "0";
+    currentCard.style.transform = "translateY(-300px)"; // 위로 날아가는 모션
+
+    setTimeout(() => {
+      // 스타일 초기화
+      currentCard.style.opacity = "";
+      currentCard.style.transform = "";
+
+      // 현재 카드를 스택의 가장 마지막으로 이동 (DOM 순서 변경)
+      stack.appendChild(currentCard);
+    }, 300); // transition 시간과 맞춤
+  } else {
+    // 100px 미만으로 드래그했으면 원위치로 복귀
+    currentCard.style.transform = "";
+  }
+
+  // 이벤트 리스너 해제
+  document.onmousemove = null;
+  document.onmouseup = null;
+}
