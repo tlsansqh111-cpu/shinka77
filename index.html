@@ -9,11 +9,26 @@
   <body>
     <header>
       <nav>
-        <a href="index.html">Home</a>
-        <a href="#about">about</a>
-        <a href="./gallery/index.html">Gallery</a>
-        <a href="#politpolio">PolitPolio</a>
-        <a href="#" class="icon">language</a>
+        <a href="index.html" data-i18n="home">Home</a>
+        <a href="#about" data-i18n="about">about</a>
+        <a href="./gallery/index.html" data-i18n="gallery">Gallery</a>
+        <a href="#politpolio" data-i18n="portfolio">PolitPolio</a>
+
+        <div class="lang-dropdown">
+          <a href="#" class="lang-btn">
+            <span
+              class="icon"
+              style="font-family: &quot;Material Icons&quot;, sans-serif"
+            ></span>
+            <span data-i18n="language" style="margin-left: 5px">Language</span>
+          </a>
+          <ul class="lang-menu">
+            <li><a href="#" data-lang="en">English</a></li>
+            <li><a href="#" data-lang="ko">Korean</a></li>
+            <li><a href="#" data-lang="ja">Japanese</a></li>
+            <li><a href="#" data-lang="zh">Chinese</a></li>
+          </ul>
+        </div>
       </nav>
     </header>
 
@@ -27,7 +42,7 @@
     </section>
 
     <main class="container">
-      <section class="card about-card" id="about">
+      <section class="card-section about-card" id="about">
         <div class="profile-img">
           <img src="main/profilo.jpg" alt="Profile" />
         </div>
@@ -55,9 +70,8 @@
         </div>
       </section>
 
-      <section class="card portfolio-card" id="politpolio">
+      <section class="card-section portfolio-card" id="politpolio">
         <h2>Portpolio</h2>
-
         <div class="portfolio-grid">
           <div class="item item-web">
             <img src="main/noworkbee.jpg" alt="WEB UX/UI" />
@@ -80,7 +94,6 @@
             <span class="item-text">편집 디자인</span>
           </div>
         </div>
-
         <div class="more-link">
           <a href="#">Portpolio 더보기</a>
         </div>
@@ -97,18 +110,10 @@
         </p>
       </div>
 
-      <div class="drag-container card-stack" id="dragContainer">
-        <img
-          src="main/일러스트 북 내지-9.jpg"
-          alt="Design 1"
-          class="drag-img card"
-        />
-        <img
-          src="main/일러스트 북 내지-12.jpg"
-          alt="Design 2"
-          class="drag-img card"
-        />
-        <img src="main/" alt="Design 3" class="drag-img card" />
+      <div class="card-stack" id="dragContainer">
+        <img src="main/일러스트 북 내지-9.jpg" alt="Design 1" class="card" />
+        <img src="main/일러스트 북 내지-12.jpg" alt="Design 2" class="card" />
+        <img src="main/일러스트 북 내지-11.jpg" alt="Design 3" class="card" />
       </div>
     </section>
 

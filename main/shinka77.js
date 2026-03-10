@@ -1,83 +1,110 @@
-// 드래그할 래퍼 요소 선택
-const dragWrapper = document.getElementById("dragWrapper");
-
-// 드래그 상태 및 좌표 변수
-let isDragging = false;
-let currentTransform = -50; // 초기 CSS transform: translateY(-50%) 에 맞춤
-let currentY = 0;
-
-// 1. 마우스를 눌렀을 때 (드래그 시작)
-dragWrapper.addEventListener("mousedown", (e) => {
-  isDragging = true;
-  // 클릭한 순간의 Y 좌표 저장
-  startY = e.clientY;
-
-  // 드래그 중 부드러운 움직임을 위해 transition 제거
-  dragWrapper.style.transition = "none";
+// ==========================================
+// 1. 헤더 스크롤 이벤트 (가로 -> 세로 원형)
+// ==========================================
+const header = document.querySelector("header");
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 150) {
+    header.classList.add("scrolled");
+  } else {
+    header.classList.remove("scrolled");
+  }
 });
 
-// 2. 마우스 버튼을 뗐을 때 (드래그 종료)
-window.addEventListener("mouseup", () => {
-  if (!isDragging) return;
-  isDragging = false;
+// ==========================================
+// 2. 다국어 드롭다운 및 번역 로직
+// ==========================================
+const langBtn = document.querySelector(".lang-btn");
+const langMenu = document.querySelector(".lang-menu");
 
-  // 드래그가 끝난 위치를 새로운 기준점으로 저장
-  currentTransform = currentTransform + currentY;
-  currentY = 0;
+if (langBtn && langMenu) {
+  langBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    langMenu.classList.toggle("active");
+  });
 
-  // 다시 부드러운 효과 복구
-  dragWrapper.style.transition = "transform 0.3s ease-out";
+  document.addEventListener("click", (e) => {
+    if (!langBtn.contains(e.target) && !langMenu.contains(e.target)) {
+      langMenu.classList.remove("active");
+    }
+  });
+}
+
+const translations = {
+  en: {
+    home: "Home",
+    about: "about",
+    gallery: "Gallery",
+    portfolio: "PolitPolio",
+    language: "Language",
+  },
+  ko: {
+    home: "홈",
+    about: "소개",
+    gallery: "갤러리",
+    portfolio: "포트폴리오",
+    language: "언어",
+  },
+  ja: {
+    home: "ホーム",
+    about: "紹介",
+    gallery: "ギャラリー",
+    portfolio: "ポートフォリオ",
+    language: "言語",
+  },
+  zh: {
+    home: "首页",
+    about: "关于",
+    gallery: "画廊",
+    portfolio: "作品集",
+    language: "语言",
+  },
+};
+
+const langOptions = document.querySelectorAll(".lang-menu a");
+const i18nElements = document.querySelectorAll("[data-i18n]");
+
+function applyLanguage(lang) {
+  i18nElements.forEach((el) => {
+    const key = el.getAttribute("data-i18n");
+    if (translations[lang] && translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+}
+
+const savedLang = localStorage.getItem("selectedLang") || "en";
+applyLanguage(savedLang);
+
+langOptions.forEach((option) => {
+  option.addEventListener("click", (e) => {
+    e.preventDefault();
+    const selectedLang = e.currentTarget.getAttribute("data-lang");
+    localStorage.setItem("selectedLang", selectedLang);
+    applyLanguage(selectedLang);
+    if (langMenu) langMenu.classList.remove("active");
+  });
 });
 
-// 3. 마우스를 움직일 때 (드래그 진행 중)
-window.addEventListener("mousemove", (e) => {
-  if (!isDragging) return; // 드래그 상태가 아니면 무시
-
-  // 브라우저 기본 드래그 동작 방지
-  e.preventDefault();
-
-  // 마우스가 이동한 거리 계산 (위아래)
-  const moveY = e.clientY - startY;
-
-  // 이동 속도 조절 (픽셀 단위를 % 단위 느낌으로 변환하여 부드럽게)
-  currentY = moveY * 0.2;
-
-  // 이동 범위를 제한하고 싶다면 아래 주석을 해제하고 값을 조정하세요.
-  // const totalMove = currentTransform + currentY;
-  // if (totalMove > 0) currentY = -currentTransform; // 너무 밑으로 안 내려가게
-  // if (totalMove < -100) currentY = -100 - currentTransform; // 너무 위로 안 올라가게
-
-  // 화면에 실시간으로 위치 적용
-  dragWrapper.style.transform = `translateY(calc(${currentTransform}% + ${moveY}px))`;
-});
-
-// 테스트
-
-c; /* --- 기존 JS 드래그 로직을 모두 지우고 아래 코드로 교체하세요 --- */
-
+// ==========================================
+// 3. 카드 스택 넘기기 애니메이션 로직
+// ==========================================
 const stack = document.querySelector(".card-stack");
 let startY = 0;
 let currentCard = null;
 
-stack.addEventListener("mousedown", (e) => {
-  // 브라우저의 기본 이미지 드래그 현상 방지
-  e.preventDefault();
-
-  // 항상 스택의 제일 위에 있는(첫 번째) 카드를 선택
-  currentCard = stack.querySelector(".card:first-child");
-  startY = e.clientY;
-
-  // 마우스 이동 시 부드럽게 따라오도록 transition 임시 해제
-  currentCard.style.transition = "none";
-
-  document.onmousemove = drag;
-  document.onmouseup = stopDrag;
-});
+if (stack) {
+  stack.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    currentCard = stack.querySelector(".card:first-child");
+    startY = e.clientY;
+    currentCard.style.transition = "none";
+    document.onmousemove = drag;
+    document.onmouseup = stopDrag;
+  });
+}
 
 function drag(e) {
   let move = e.clientY - startY;
-
-  // 위로 올릴 때만 반응하도록 설정 (필요시 양방향으로 변경 가능)
   if (move < 0) {
     currentCard.style.transform = `translateY(${move}px)`;
   }
@@ -86,29 +113,30 @@ function drag(e) {
 function stopDrag(e) {
   let move = e.clientY - startY;
 
-  // 다시 부드러운 전환 효과 복구
-  currentCard.style.transition =
-    "transform 0.3s, opacity 0.3s, top 0.3s, left 0.3s";
-
-  // 위로 100px 이상 드래그했을 경우 (카드 넘기기 성공)
   if (move < -100) {
+    currentCard.style.transition =
+      "transform 0.3s ease-out, opacity 0.3s ease-out";
     currentCard.style.opacity = "0";
-    currentCard.style.transform = "translateY(-300px)"; // 위로 날아가는 모션
+    currentCard.style.transform = "translateY(-300px)";
 
     setTimeout(() => {
-      // 스타일 초기화
+      currentCard.style.transition = "none";
       currentCard.style.opacity = "";
       currentCard.style.transform = "";
-
-      // 현재 카드를 스택의 가장 마지막으로 이동 (DOM 순서 변경)
       stack.appendChild(currentCard);
-    }, 300); // transition 시간과 맞춤
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          currentCard.style.transition =
+            "transform 0.3s ease-out, opacity 0.3s ease-out, top 0.3s, left 0.3s";
+        });
+      });
+    }, 300);
   } else {
-    // 100px 미만으로 드래그했으면 원위치로 복귀
+    currentCard.style.transition = "transform 0.3s ease-out";
     currentCard.style.transform = "";
   }
 
-  // 이벤트 리스너 해제
   document.onmousemove = null;
   document.onmouseup = null;
 }
