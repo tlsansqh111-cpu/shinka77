@@ -1,5 +1,5 @@
 /* ==========================================
-   기본 초기화 및 공통 스타일
+   0. 기본 초기화 및 공통 스타일
 ========================================== */
 html {
   scroll-behavior: smooth;
@@ -16,7 +16,7 @@ body {
 }
 
 /* ==========================================
-   ✨ 공통 헤더 스타일 (스크롤 반응형)
+   1. 공통 헤더 스타일 (스크롤 반응형)
 ========================================== */
 header {
   position: fixed;
@@ -128,7 +128,7 @@ header.scrolled .lang-menu {
 }
 
 /* ==========================================
-   메인 비디오 섹션
+   2. 메인 비디오 섹션
 ========================================== */
 .hero {
   position: relative;
@@ -163,7 +163,7 @@ header.scrolled .lang-menu {
 }
 
 /* ==========================================
-   컨텐츠 컨테이너 및 카드 (PC 버전)
+   3. 컨텐츠 컨테이너 및 카드 (PC)
 ========================================== */
 .container {
   max-width: 1300px;
@@ -318,13 +318,15 @@ header.scrolled .lang-menu {
   line-height: 1.5;
 }
 
-/* 카드 스택 래퍼 (PC) */
-.card-stack {
+/* 카드 스택 래퍼 (PC) + ✨터치 스크롤 방지 추가 */
+.card-stack,
+#dragContainer {
   position: relative;
   width: 500px;
   height: 650px;
   flex: 1;
   margin-right: 50px;
+  touch-action: none; /* ✨ 모바일에서 카드 만질 때 화면 스크롤 방지 */
 }
 .card {
   position: absolute;
@@ -377,14 +379,52 @@ header.scrolled .lang-menu {
 }
 
 /* ==========================================
-   📱 모바일 반응형 (화면 폭 768px 이하) - 최종 클린본
-/* ==========================================
-   📱 모바일 반응형 (화면 폭 768px 이하) - 최종 보완본
+   📱 4. 모바일 반응형 (화면 폭 768px 이하)
 ========================================== */
 @media (max-width: 768px) {
-  /* ... (1~3번 코드는 동일하므로 생략, 4번부터 교체) ... */
+  /* 4-1. 헤더 (모바일에선 캡슐 형태로 상단 가로 고정) */
+  header {
+    padding: 15px 0;
+  }
+  header nav {
+    gap: 15px;
+  }
+  header nav a {
+    font-size: 0.9rem;
+  }
+  header.scrolled {
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    padding: 15px 20px;
+    border-radius: 30px;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  header.scrolled nav {
+    flex-direction: row;
+    gap: 10px;
+  }
 
-  /* 4. About Me 섹션 (모바일 시안 완벽 구현) */
+  /* 4-2. 메인 비디오 축소 */
+  .hero {
+    height: 100vh;
+    border-radius: 0 0 50px 50px;
+  }
+  .logo-text {
+    font-size: 4rem;
+    margin-top: 150px;
+    text-align: center;
+  }
+
+  /* 4-3. 컨테이너 여백 축소 */
+  .container {
+    margin-top: -40px;
+    padding: 0 20px;
+  }
+
+  /* 4-4. About Me (모바일 시안처럼 배경 날리고 재배치) */
   .about-card {
     background: transparent;
     box-shadow: none;
@@ -392,7 +432,6 @@ header.scrolled .lang-menu {
     height: auto;
     margin-bottom: 80px;
   }
-  /* 'About Me' 글자를 흰색 박스 밖으로 빼냄 */
   .about-card h2 {
     color: #fff;
     text-align: left;
@@ -400,7 +439,6 @@ header.scrolled .lang-menu {
     margin-bottom: 80px;
     padding-left: 10px;
   }
-  /* 흰색 박스 재구성 및 내용물 순서 뒤집기 (Flex column-reverse 활용) */
   .about-content {
     background: #fff;
     border-radius: 30px;
@@ -411,7 +449,6 @@ header.scrolled .lang-menu {
     position: relative;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   }
-  /* 프로필 이미지 정중앙 배치 */
   .profile-img {
     width: 150px;
     height: 150px;
@@ -455,7 +492,7 @@ header.scrolled .lang-menu {
     gap: 15px 0;
   }
 
-  /* 5. Portfolio 섹션 (배경 없애고 이미지 독립 배치) */
+  /* 4-5. Portfolio (배경 제거 & 1열 세로배치) */
   .portfolio-card {
     background: transparent;
     box-shadow: none;
@@ -463,7 +500,7 @@ header.scrolled .lang-menu {
   }
   .portfolio-card h2 {
     display: none;
-  } /* 시안에 맞춰 제목 숨김 */
+  }
   .portfolio-grid {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -479,7 +516,6 @@ header.scrolled .lang-menu {
     overflow: visible;
     box-shadow: none;
   }
-  /* 이미지 비율 조정 */
   .portfolio-grid .item img {
     position: relative;
     width: 100%;
@@ -487,7 +523,6 @@ header.scrolled .lang-menu {
     border-radius: 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   }
-  /* 텍스트를 이미지 아래로 이동 & 흰색 처리 */
   .portfolio-grid .item .item-text {
     color: #fff;
     font-size: 1.1rem;
@@ -497,63 +532,77 @@ header.scrolled .lang-menu {
   }
   .more-link {
     display: none;
-  } /* 시안에 맞춰 더보기 숨김 */
+  }
 
-  /* 6. Design and Place 섹션 (카드 가림 버그 해결) */
+  /* 4-6. Design and Place (텍스트 왼쪽 정렬 및 카드 누락 방지) */
   .design-place {
-    flex-direction: column-reverse;
-    height: auto;
-    padding: 0 20px;
-    margin: 60px auto 100px;
-    gap: 40px;
-    overflow: hidden; /* 카드가 오른쪽 벽 너머로 살짝 튀어나가도록 */
-  }
-  /* 카드 스택 크기 조정 및 시안처럼 오른쪽 벽 너머로 밀기 */
-  .card-stack,
-  #dragContainer {
-    position: relative;
-    width: 500px;
-    height: 650px;
-    flex: 1;
-    margin-right: 50px;
-
-    /* ✨ 핵심: 이 영역에서는 브라우저의 기본 스크롤/확대를 무시합니다 */
-    touch-action: none;
-  }
-  .card {
-    border-radius: 40px;
-  }
-  /* 카드 계단식 배열 (PC와 반대 방향: 아래 카드가 왼쪽으로 가도록) */
-  .card:nth-child(1) {
-    top: 0px;
-    left: 0px;
-  }
-  .card:nth-child(2) {
-    top: 30px;
-    left: -20px;
-  } /* 시안처럼 왼쪽으로 튀어나오게 */
-  .card:nth-child(3) {
-    top: 60px;
-    left: -40px;
-  }
-  .card:nth-child(n + 4) {
-    top: 60px;
-    left: -40px;
+    display: flex !important;
+    flex-direction: column !important; /* 텍스트 위, 카드 아래로 배치 */
+    height: auto !important;
+    padding: 50px 20px !important;
+    margin: 50px auto 100px auto !important;
+    gap: 40px !important;
+    align-items: flex-start !important;
   }
 
+  /* 타이포그래피 정렬 보존 */
   .design-text {
-    padding-left: 0;
-    text-align: left;
+    padding: 0 !important;
+    text-align: left !important;
+    width: 100% !important;
   }
   .design-text h2 {
-    font-size: 3rem;
-    margin-bottom: 20px;
+    font-size: 3rem !important;
+    margin-bottom: 20px !important;
   }
   .design-text h3 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+    font-size: 1.5rem !important;
+    margin-bottom: 10px !important;
   }
   .design-text p {
-    font-size: 1rem;
+    font-size: 1rem !important;
+  }
+
+  /* 카드 스택 영역 강제 고정 */
+  .card-stack,
+  #dragContainer {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 420px !important;
+    margin: 0 !important;
+    visibility: visible !important;
+    touch-action: none !important; /* 모바일 전용 터치 스크롤 방지 한 번 더 확인 */
+  }
+
+  /* 개별 카드 크기 고정 (사라짐 방지) */
+  .card {
+    position: absolute !important;
+    width: 280px !important;
+    height: 380px !important;
+    border-radius: 40px !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* 카드 계단식 배열 */
+  .card:nth-child(1) {
+    top: 0px !important;
+    left: 0px !important;
+    z-index: 3 !important;
+  }
+  .card:nth-child(2) {
+    top: 20px !important;
+    left: 20px !important;
+    z-index: 2 !important;
+  }
+  .card:nth-child(3) {
+    top: 40px !important;
+    left: 40px !important;
+    z-index: 1 !important;
+  }
+  .card:nth-child(n + 4) {
+    display: none !important;
   }
 }
