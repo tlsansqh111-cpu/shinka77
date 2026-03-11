@@ -16,6 +16,7 @@ body {
 
 /* ================= 1. 헤더 (마진 대폭 확대) ================= */
 .gallery-header {
+  margin-top: 50;
   display: flex;
   justify-content: center;
   padding-top: 50px;
@@ -68,6 +69,7 @@ body {
   line-height: 1.6;
   font-weight: 800;
   letter-spacing: 0.5px;
+  margin-top: 180px;
 }
 
 /* 중앙 포커스 영역 */
@@ -231,4 +233,119 @@ body {
 }
 .gallery-main {
   padding-bottom: 300px;
+}
+header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: 1000;
+  padding: 30px 0;
+  display: flex;
+  justify-content: center;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+header nav {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  transition: all 0.5s ease;
+}
+header nav a {
+  text-decoration: none;
+  color: #666666;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+header nav a:hover {
+  color: #ffffff;
+}
+
+header.scrolled {
+  top: 50%;
+  left: 30px;
+  transform: translateY(-50%);
+  width: auto;
+  padding: 40px 25px;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 50px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+header.scrolled nav {
+  flex-direction: column;
+  gap: 30px;
+}
+header.scrolled nav a {
+  color: #333333;
+}
+header.scrolled nav a:hover {
+  color: #1a237e;
+}
+
+.lang-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.lang-btn {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #666666;
+  cursor: pointer;
+}
+.lang-btn:hover {
+  color: #ffffff;
+}
+header.scrolled .lang-btn:hover {
+  color: #1a237e;
+}
+
+.lang-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+  padding: 0;
+  list-style: none;
+  min-width: 120px;
+  text-align: center;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+.lang-menu.active {
+  max-height: 250px;
+  opacity: 1;
+  visibility: visible;
+  padding: 10px 0;
+}
+header nav .lang-menu a {
+  display: block;
+  color: #666666;
+  font-size: 1rem;
+  padding: 10px 20px;
+  font-weight: 500;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+header nav .lang-menu a:hover {
+  background-color: #f5f5f5;
+  color: #1a237e;
+}
+header.scrolled .lang-menu {
+  top: 50%;
+  left: 100%;
+  transform: translate(20px, -50%);
+  margin-top: 0;
 }

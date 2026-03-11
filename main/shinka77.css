@@ -128,7 +128,7 @@ header.scrolled .lang-menu {
   position: relative;
   width: 100%;
   max-width: 1920px;
-  height: 1200px;
+  height: 1080px;
   margin: 0 auto;
   overflow: hidden;
   display: flex;
@@ -173,7 +173,7 @@ header.scrolled .lang-menu {
 /* About Me 섹션 */
 .about-card {
   position: relative;
-  margin-top: 0px;
+  margin-top: 70px;
   height: 600px;
 }
 .profile-img {
