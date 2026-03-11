@@ -473,6 +473,7 @@ header.scrolled .lang-menu {
     transform: translateX(-50%);
     border-width: 8px;
     margin-top: 130px;
+    z-index: 10;
   }
   .about-right {
     text-align: center;
