@@ -409,14 +409,18 @@ header.scrolled .lang-menu {
 
   /* 4-2. 메인 비디오 축소 */
   .hero {
-    height: 55vh;
-    min-height: 300px;
-    border-radius: 0 0 40px 40px;
+    height: 100vh;
+    border-radius: 0 0 50px 50px;
   }
   .logo-text {
     font-size: 4rem;
     margin-top: 150px;
     text-align: center;
+  }
+  .bg-video {
+    object-fit: contain !important;
+    width: 50% !important;
+    height: 100% !important;
   }
 
   /* 4-3. 컨테이너 여백 축소 */
