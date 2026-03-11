@@ -420,7 +420,7 @@ header.scrolled .lang-menu {
   .bg-video {
     object-fit: contain !important;
     width: 50% !important;
-    height: 100% !important;
+    height: 50% !important;
   }
 
   /* 4-3. 컨테이너 여백 축소 */
