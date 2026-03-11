@@ -1,4 +1,6 @@
-/* 기본 초기화 */
+/* ==========================================
+   기본 초기화 및 공통 스타일
+========================================== */
 html {
   scroll-behavior: smooth;
 }
@@ -13,7 +15,9 @@ body {
   overflow-x: hidden;
 }
 
-/* ✨ 공통 헤더 스타일 (스크롤 반응형) */
+/* ==========================================
+   ✨ 공통 헤더 스타일 (스크롤 반응형)
+========================================== */
 header {
   position: fixed;
   top: 0;
@@ -43,7 +47,7 @@ header nav a:hover {
   color: #ffffff;
 }
 
-/* 스크롤 시 변형되는 세로 동그라미 헤더 */
+/* 스크롤 시 변형되는 세로 동그라미 헤더 (PC) */
 header.scrolled {
   top: 50%;
   left: 30px;
@@ -123,7 +127,9 @@ header.scrolled .lang-menu {
   margin-top: 0;
 }
 
-/* 메인 비디오 섹션 */
+/* ==========================================
+   메인 비디오 섹션
+========================================== */
 .hero {
   position: relative;
   width: 100%;
@@ -156,7 +162,9 @@ header.scrolled .lang-menu {
   text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.5);
 }
 
-/* 컨텐츠 컨테이너 및 카드 */
+/* ==========================================
+   컨텐츠 컨테이너 및 카드 (PC 버전)
+========================================== */
 .container {
   max-width: 1300px;
   margin: -80px auto 0;
@@ -280,7 +288,7 @@ header.scrolled .lang-menu {
   font-size: 1.2rem;
 }
 
-/* Design and Place 섹션 (위아래 쏠림 완벽 해결 버전) */
+/* Design and Place 섹션 (PC) */
 .design-place {
   max-width: 1400px;
   margin: 120px auto;
@@ -310,7 +318,7 @@ header.scrolled .lang-menu {
   line-height: 1.5;
 }
 
-/* 카드 스택 래퍼 */
+/* 카드 스택 래퍼 (PC) */
 .card-stack {
   position: relative;
   width: 500px;
@@ -369,11 +377,10 @@ header.scrolled .lang-menu {
 }
 
 /* ==========================================
- /* ==========================================
-   📱 모바일 반응형 (화면 폭 768px 이하) - 최종 복구본
+   📱 모바일 반응형 (화면 폭 768px 이하) - 최종 클린본
 ========================================== */
 @media (max-width: 768px) {
-  /* 1. 헤더 모바일 최적화 */
+  /* 1. 헤더 (모바일에선 캡슐 형태로 상단 가로 고정) */
   header {
     padding: 15px 0;
   }
@@ -398,7 +405,7 @@ header.scrolled .lang-menu {
     gap: 10px;
   }
 
-  /* 2. 메인 비디오 */
+  /* 2. 메인 비디오 축소 */
   .hero {
     height: 100vh;
     border-radius: 0 0 50px 50px;
@@ -409,13 +416,13 @@ header.scrolled .lang-menu {
     text-align: center;
   }
 
-  /* 3. 컨테이너 여백 */
+  /* 3. 컨테이너 여백 축소 */
   .container {
     margin-top: -40px;
     padding: 0 20px;
   }
 
-  /* 4. About Me (모바일 시안 적용) */
+  /* 4. About Me (모바일 시안처럼 배경 날리고 재배치) */
   .about-card {
     background: transparent;
     box-shadow: none;
@@ -525,64 +532,22 @@ header.scrolled .lang-menu {
     display: none;
   }
 
-  /* 6. Design and Place (✨사라진 카드 강제 소환 파트✨) */
+  /* 6. Design and Place (타이포 왼쪽 정렬 보존 & 카드 누락 방지 완벽 적용) */
   .design-place {
     display: flex !important;
-    flex-direction: column-reverse !important; /* 카드 위, 텍스트 아래 */
+    flex-direction: column !important; /* 텍스트 위, 카드 아래로 배치 */
     height: auto !important;
     padding: 50px 20px !important;
     margin: 50px auto 100px auto !important;
     gap: 40px !important;
-    /* overflow: hidden; 삭제! (카드가 잘리는 원인) */
+    align-items: flex-start !important; /* 원본 텍스트 기준점 (왼쪽) 유지 */
   }
 
-  /* 카드 스택(부모) 영역 확실하게 잡아주기 */
-  .card-stack,
-  #dragContainer {
-    display: block !important;
-    position: relative !important;
-    width: 100% !important;
-    max-width: 320px !important;
-    height: 400px !important;
-    margin: 0 auto !important; /* 정중앙 배치 */
-    visibility: visible !important;
-  }
-
-  /* 개별 카드들이 100% 보이도록 락(Lock) 걸기 */
-  .card {
-    position: absolute !important;
-    width: 100% !important;
-    height: 100% !important;
-    border-radius: 40px !important;
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-
-  /* 카드 겹침 계단 효과 */
-  .card:nth-child(1) {
-    top: 0px !important;
-    left: 0px !important;
-    z-index: 3 !important;
-  }
-  .card:nth-child(2) {
-    top: 30px !important;
-    left: 20px !important;
-    z-index: 2 !important;
-  }
-  .card:nth-child(3) {
-    top: 60px !important;
-    left: 40px !important;
-    z-index: 1 !important;
-  }
-  .card:nth-child(n + 4) {
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-
+  /* 타이포그래피 정렬 보존 */
   .design-text {
     padding: 0 !important;
-    text-align: center !important;
+    text-align: left !important;
+    width: 100% !important;
   }
   .design-text h2 {
     font-size: 3rem !important;
@@ -594,5 +559,47 @@ header.scrolled .lang-menu {
   }
   .design-text p {
     font-size: 1rem !important;
+  }
+
+  /* 누락되던 카드 스택 영역 강제 고정 */
+  .card-stack,
+  #dragContainer {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 420px !important;
+    margin: 0 !important;
+    visibility: visible !important;
+  }
+
+  /* 개별 카드 크기 모바일에 맞춰 고정 (찌그러짐/사라짐 방지) */
+  .card {
+    position: absolute !important;
+    width: 280px !important;
+    height: 380px !important;
+    border-radius: 40px !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* 카드 계단식 배열 (모바일 사이즈) */
+  .card:nth-child(1) {
+    top: 0px !important;
+    left: 0px !important;
+    z-index: 3 !important;
+  }
+  .card:nth-child(2) {
+    top: 20px !important;
+    left: 20px !important;
+    z-index: 2 !important;
+  }
+  .card:nth-child(3) {
+    top: 40px !important;
+    left: 40px !important;
+    z-index: 1 !important;
+  }
+  .card:nth-child(n + 4) {
+    display: none !important;
   }
 }
