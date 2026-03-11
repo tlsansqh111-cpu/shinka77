@@ -417,11 +417,14 @@ header.scrolled .lang-menu {
   /* ✨ 핵심: PC에서 쓰던 위치 강제 이동을 해제하고, 상자 크기에 딱 맞춤 */
   .bg-video {
     top: 0 !important;
-    left: 10px !important;
-    transform: none !important; /* 중앙으로 억지로 밀어내던 설정 해제 */
+    left: 0 !important;
+    transform: none !important;
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important; /* 화면 꽉 채우고 남는 좌우만 깔끔하게 커팅 */
+    object-fit: cover !important;
+
+    /* ✨ 짤리는 화면의 중심(포커스)을 맞추는 속성! (가로 세로) */
+    object-position: 70% 50% !important;
   }
 
   .logo-text {
