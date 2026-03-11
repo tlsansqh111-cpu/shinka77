@@ -140,3 +140,63 @@ function stopDrag(e) {
   document.onmousemove = null;
   document.onmouseup = null;
 }
+
+// ==========================================
+// 📱 모바일 터치 드래그 이벤트 (카드 날리기)
+// ==========================================
+if (stack) {
+  stack.addEventListener(
+    "touchstart",
+    (e) => {
+      currentCard = stack.querySelector(".card:first-child");
+      startY = e.touches[0].clientY;
+      currentCard.style.transition = "none";
+    },
+    { passive: true },
+  );
+
+  stack.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!currentCard) return;
+      let move = e.touches[0].clientY - startY;
+      // 위로 밀어 올릴 때만 반응
+      if (move < 0) {
+        currentCard.style.transform = `translateY(${move}px)`;
+      }
+    },
+    { passive: true },
+  );
+
+  stack.addEventListener("touchend", (e) => {
+    if (!currentCard) return;
+    let move = e.changedTouches[0].clientY - startY;
+
+    // 위로 100px 이상 쓸어 올렸을 때 다음 카드로 넘김
+    if (move < -100) {
+      currentCard.style.transition =
+        "transform 0.3s ease-out, opacity 0.3s ease-out";
+      currentCard.style.opacity = "0";
+      currentCard.style.transform = "translateY(-300px)";
+
+      setTimeout(() => {
+        currentCard.style.transition = "none";
+        currentCard.style.opacity = "";
+        currentCard.style.transform = "";
+        stack.appendChild(currentCard);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            currentCard.style.transition =
+              "transform 0.3s ease-out, opacity 0.3s ease-out, top 0.3s, left 0.3s";
+          });
+        });
+      }, 300);
+    } else {
+      // 덜 올렸으면 원상복구
+      currentCard.style.transition = "transform 0.3s ease-out";
+      currentCard.style.transform = "";
+    }
+    currentCard = null; // 터치 종료 후 초기화
+  });
+}
