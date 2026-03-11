@@ -363,7 +363,353 @@ header.scrolled .lang-menu {
 }
 
 .footer {
-  height: 100px;
+  height: 400px;
   background-color: #7899a6;
-  margin-top: 50px;
+  margin-top: 100px;
+}
+
+/* ==========================================
+   📱 모바일 반응형 (화면 너비 768px 이하)
+========================================== */
+@media (max-width: 768px) {
+  /* 1. 헤더 모바일 최적화 */
+  header {
+    padding: 15px 0;
+  }
+  header nav {
+    gap: 15px;
+  }
+  header nav a {
+    font-size: 0.9rem;
+  }
+
+  /* 모바일에서는 헤더가 왼쪽 세로가 아닌 상단 가로 캡슐 형태로 변형됨 */
+  header.scrolled {
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    padding: 15px 20px;
+    border-radius: 30px;
+    flex-direction: row;
+    justify-content: center;
+  }
+  header.scrolled nav {
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  /* 2. 메인 비디오 섹션 (높이 및 폰트 축소) */
+  .hero {
+    height: 100vh;
+    border-radius: 0 0 50px 50px;
+  }
+  .logo-text {
+    font-size: 4rem;
+    margin-top: 100px;
+  }
+
+  /* 3. 컨테이너 및 카드 공통 여백 축소 */
+  .container {
+    margin-top: -40px;
+    padding: 0 15px;
+  }
+  .card-section {
+    padding: 30px 20px;
+    border-radius: 20px;
+  }
+
+  /* 4. About Me 섹션 (가로 배치를 세로 배치로 변경) */
+  .about-card {
+    height: auto;
+    padding-top: 150px;
+  }
+  .profile-img {
+    width: 200px;
+    height: 200px;
+    top: -100px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%); /* 이미지를 정중앙으로 이동 */
+    border-width: 8px;
+  }
+  .about-content {
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 0;
+  }
+  .about-left p {
+    margin-bottom: 30px;
+  }
+  .about-right h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+
+  /* 5. Portfolio 섹션 (2열 그리드를 1열로 변경) */
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+    gap: 15px;
+  }
+  .portfolio-grid .item {
+    height: 200px;
+  }
+  .item-web,
+  .item-edit {
+    grid-row: auto;
+    grid-column: auto;
+  }
+
+  /* 6. Design and Place 섹션 (텍스트와 카드를 위아래로 분리) */
+  .design-place {
+    flex-direction: column;
+    height: auto;
+    padding: 50px 15px;
+    margin: 50px auto;
+    gap: 60px;
+  }
+  .design-text {
+    padding-left: 0;
+    text-align: center;
+  }
+  .design-text h2 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+  }
+
+  /* 카드 스택 모바일 크기 조절 */
+  .card-stack {
+    width: 100%;
+    max-width: 320px;
+    height: 450px;
+    margin: 0 auto;
+  }
+  .card {
+    border-radius: 40px;
+  }
+
+  .card:nth-child(2) {
+    top: 40px;
+    left: 30px;
+  }
+  .card:nth-child(3) {
+    top: 70px;
+    left: 50px;
+  }
+  .card:nth-child(n + 4) {
+    top: 70px;
+    left: 50px;
+  }
+}
+/* ==========================================
+   📱 모바일 반응형 (화면 폭 768px 이하)
+========================================== */
+@media (max-width: 768px) {
+  /* 1. 헤더 (모바일에선 캡슐 형태로 가로 정렬 유지) */
+  header {
+    padding: 15px 0;
+  }
+  header nav {
+    gap: 15px;
+  }
+  header nav a {
+    font-size: 0.9rem;
+  }
+  header.scrolled {
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    padding: 15px 20px;
+    border-radius: 30px;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  header.scrolled nav {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  /* 2. 메인 비디오 섹션 */
+  .hero {
+    height: 100vh;
+    border-radius: 0 0 50px 50px;
+  }
+  .logo-text {
+    font-size: 4rem;
+    margin-top: 150px;
+    text-align: center;
+  }
+
+  /* 3. 전체 컨테이너 여백 축소 */
+  .container {
+    margin-top: -40px;
+    padding: 0 20px;
+  }
+
+  /* 4. About Me 섹션 (모바일 시안 완벽 구현) */
+  .about-card {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    height: auto;
+    margin-bottom: 80px;
+  }
+  /* 'About Me' 글자를 흰색 박스 밖으로 빼냄 */
+  .about-card h2 {
+    color: #fff;
+    text-align: left;
+    font-size: 2.2rem;
+    margin-bottom: 80px;
+    padding-left: 10px;
+  }
+  /* 흰색 박스 재구성 및 내용물 순서 뒤집기 (Flex column-reverse 활용) */
+  .about-content {
+    background: #fff;
+    border-radius: 30px;
+    padding: 80px 30px 40px 30px;
+    margin-top: 0;
+    flex-direction: column-reverse;
+    gap: 40px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+  /* 프로필 이미지 정중앙 배치 */
+  .profile-img {
+    width: 150px;
+    height: 150px;
+    top: -75px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    border-width: 8px;
+  }
+  .about-right {
+    text-align: center;
+  }
+  .about-right h3 {
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  .about-right .origin {
+    margin-bottom: 20px;
+  }
+  .about-right .desc {
+    font-size: 0.95rem;
+    text-align: left;
+  }
+  .about-left {
+    text-align: left;
+    width: 100%;
+    border-top: 1px solid #eee;
+    padding-top: 30px;
+  }
+  .about-left h4 {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  .about-left p {
+    margin-bottom: 30px;
+    font-size: 0.9rem;
+  }
+  .keywords {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px 0;
+  }
+
+  /* 5. Portfolio 섹션 (배경 없애고 이미지 독립 배치) */
+  .portfolio-card {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
+  .portfolio-card h2 {
+    display: none;
+  } /* 시안에 맞춰 제목 숨김 */
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    height: auto;
+    margin-top: 0;
+  }
+  .portfolio-grid .item {
+    background: transparent;
+    height: auto;
+    padding: 0;
+    align-items: flex-start;
+    flex-direction: column;
+    overflow: visible;
+    box-shadow: none;
+  }
+  /* 이미지 비율 조정 */
+  .portfolio-grid .item img {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  /* 텍스트를 이미지 아래로 이동 & 흰색 처리 */
+  .portfolio-grid .item .item-text {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    text-shadow: none;
+    padding-left: 10px;
+  }
+  .more-link {
+    display: none;
+  } /* 시안에 맞춰 더보기 숨김 */
+
+  /* 6. Design and Place 섹션 (이미지 위, 텍스트 아래 배치) */
+  .design-place {
+    flex-direction: column-reverse;
+    height: auto;
+    padding: 0 20px;
+    margin: 60px auto 100px;
+    gap: 60px;
+  }
+  /* 모바일용 카드 사이즈 및 겹침 간격 축소 */
+  .card-stack {
+    width: 100%;
+    max-width: 320px;
+    height: 400px;
+    margin: 0 auto;
+  }
+  .card {
+    border-radius: 40px;
+  }
+  .card:nth-child(1) {
+    top: 0px;
+    left: 0px;
+  }
+  .card:nth-child(2) {
+    top: 40px;
+    left: 20px;
+  }
+  .card:nth-child(3) {
+    top: 80px;
+    left: 40px;
+  }
+  .card:nth-child(n + 4) {
+    top: 80px;
+    left: 40px;
+  }
+
+  .design-text {
+    padding-left: 0;
+    text-align: left;
+  }
+  .design-text h2 {
+    font-size: 3rem;
+    margin-bottom: 30px;
+  }
+  .design-text h3 {
+    font-size: 1.5rem;
+  }
+  .design-text p {
+    font-size: 1rem;
+  }
 }
