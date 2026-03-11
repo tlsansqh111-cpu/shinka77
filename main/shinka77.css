@@ -424,7 +424,7 @@ header.scrolled .lang-menu {
     object-fit: cover !important;
 
     /* ✨ 짤리는 화면의 중심(포커스)을 맞추는 속성! (가로 세로) */
-    object-position: 70% 50% !important;
+    object-position: 30% 50% !important;
   }
 
   .logo-text {
