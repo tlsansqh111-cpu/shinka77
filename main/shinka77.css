@@ -408,19 +408,26 @@ header.scrolled .lang-menu {
   }
 
   /* 4-2. 메인 비디오 축소 */
+  /* 2. 메인 비디오 (모바일 세로 꽉 차게 & 비정상적인 확대 버그 해결) */
   .hero {
     height: 100vh;
     border-radius: 0 0 50px 50px;
   }
+
+  /* ✨ 핵심: PC에서 쓰던 위치 강제 이동을 해제하고, 상자 크기에 딱 맞춤 */
+  .bg-video {
+    top: 0 !important;
+    left: 10px !important;
+    transform: none !important; /* 중앙으로 억지로 밀어내던 설정 해제 */
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important; /* 화면 꽉 채우고 남는 좌우만 깔끔하게 커팅 */
+  }
+
   .logo-text {
     font-size: 4rem;
     margin-top: 150px;
     text-align: center;
-  }
-  .bg-video {
-    object-fit: contain !important;
-    width: 100% !important;
-    height: 720px !important;
   }
 
   /* 4-3. 컨테이너 여백 축소 */
