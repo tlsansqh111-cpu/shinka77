@@ -606,3 +606,180 @@ header.scrolled .lang-menu {
     display: none !important;
   }
 }
+
+/* ==========================================
+   ✨ 포트폴리오 슬라이드 패널 디자인
+========================================== */
+/* 배경 흐리게 (오버레이) */
+.panel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+}
+.panel-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 오른쪽에서 스윽 나오는 패널 본체 */
+.slide-panel {
+  position: fixed;
+  top: 0;
+  right: -100%; /* 처음엔 화면 밖 우측에 숨김 */
+  width: 600px;
+  max-width: 100%;
+  height: 100vh;
+  background: #ffffff;
+  z-index: 2001;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+  transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.slide-panel.active {
+  right: 0; /* 클래스가 붙으면 화면 안으로 짠! */
+}
+
+/* 패널 상단 (제목 & 닫기 버튼 고정) */
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 40px;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.panel-title {
+  font-size: 1.8rem;
+  color: #111;
+  font-weight: 800;
+}
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  color: #999;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.close-btn:hover {
+  color: #1a237e;
+}
+
+/* 패널 내용 (이미지 & 텍스트) */
+.panel-content {
+  padding: 40px;
+}
+.panel-img {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  object-fit: cover;
+}
+.panel-desc h3 {
+  font-size: 1.4rem;
+  color: #1a237e;
+  margin-bottom: 15px;
+}
+.panel-desc p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+/* 포트폴리오 카드에 클릭 가능하다는 마우스 오버 효과 추가 */
+.portfolio-grid .item {
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.portfolio-grid .item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* 모바일 화면 대응 (패널이 폰 화면 꽉 차게) */
+@media (max-width: 768px) {
+  .slide-panel {
+    width: 100%;
+  }
+  .panel-header {
+    padding: 20px 25px;
+  }
+  .panel-content {
+    padding: 25px;
+  }
+}
+
+// ==========================================
+// ✨ 5개의 포트폴리오 슬라이드 패널 로직
+// ==========================================
+const portfolioItems = document.querySelectorAll('.portfolio-grid .item');
+const panelOverlay = document.querySelector('.panel-overlay');
+const slidePanel = document.querySelector('.slide-panel');
+const closeBtn = document.querySelector('.close-btn');
+const panelTitle = document.querySelector('.panel-title');
+const panelImg = document.querySelector('.panel-img');
+const panelText = document.getElementById('panel-text');
+
+// 각 5개 카테고리별로 보여줄 설명 데이터 (내용은 나중에 자유롭게 수정하세요!)
+const portfolioDetails = {
+  "WEB UX/UI": "사용자의 동선과 경험(UX)을 최우선으로 고려한 웹 인터페이스 설계입니다. 직관적인 네비게이션과 시각적 계층 구조를 통해 정보 전달력을 극대화했습니다.",
+  "AI 역량": "AI 툴(Midjourney, ChatGPT 등)을 활용한 디자인 프로세스 개선 및 프롬프트 엔지니어링 역량을 보여주는 프로젝트로, 작업 효율을 획기적으로 높였습니다.",
+  "제품 디자인": "사용자의 실생활에 스며드는 실용적이고 심미적인 제품 디자인입니다. 형태와 기능의 완벽한 조화를 이루는 데 집중했습니다.",
+  "캐릭터 디자인": "캐릭터의 서사와 본질을 탐구하여 독창적인 성격을 부여했습니다. 입체적이고 독립적인 1%의 매력을 빚어내는 과정을 담았습니다.",
+  "편집 디자인": "타이포그래피와 그리드 시스템을 정교하게 활용하여, 가독성과 심미성을 동시에 만족시키는 레이아웃 디자인 작업물입니다."
+};
+
+// 패널 열기 함수
+function openPanel(titleText, imgSrc) {
+  panelTitle.textContent = titleText; // 클릭한 카드의 제목 넣기
+  panelImg.src = imgSrc; // 클릭한 카드의 이미지 넣기
+  
+  // 데이터에서 해당 제목의 설명문 찾아오기
+  if(portfolioDetails[titleText]) {
+    panelText.textContent = portfolioDetails[titleText];
+  } else {
+    panelText.textContent = "상세 설명 업데이트 예정입니다.";
+  }
+
+  // 화면에 등장시키고 🌟배경 본문 스크롤은 잠금🌟
+  panelOverlay.classList.add('active');
+  slidePanel.classList.add('active');
+  document.body.style.overflow = 'hidden'; 
+}
+
+// 패널 닫기 함수
+function closePanel() {
+  panelOverlay.classList.remove('active');
+  slidePanel.classList.remove('active');
+  document.body.style.overflow = ''; // 잠가둔 배경 스크롤 원상복구
+}
+
+// 각각의 포트폴리오 카드에 클릭 이벤트 달기
+portfolioItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const title = item.querySelector('.item-text').textContent; // 제목 추출
+    const imgSrc = item.querySelector('img').src; // 이미지 경로 추출
+    openPanel(title, imgSrc);
+  });
+});
+
+// X 버튼 누르거나 어두운 배경 누르면 닫히기
+if(closeBtn) closeBtn.addEventListener('click', closePanel);
+if(panelOverlay) panelOverlay.addEventListener('click', closePanel);
