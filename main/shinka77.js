@@ -142,7 +142,7 @@ function stopDrag(e) {
 }
 
 // ==========================================
-// 📱 모바일 터치 드래그 이벤트 (카드 날리기)
+// 📱 모바일 터치 드래그 이벤트 (화면 스크롤 방지 적용)
 // ==========================================
 if (stack) {
   stack.addEventListener(
@@ -155,24 +155,28 @@ if (stack) {
     { passive: true },
   );
 
+  // ✨ touchmove 부분을 수정했습니다
   stack.addEventListener(
     "touchmove",
     (e) => {
       if (!currentCard) return;
+
+      // ✨ 핵심: 카드를 만지고 있을 때는 화면 전체가 스크롤되지 않도록 꽉 막습니다!
+      e.preventDefault();
+
       let move = e.touches[0].clientY - startY;
       // 위로 밀어 올릴 때만 반응
       if (move < 0) {
         currentCard.style.transform = `translateY(${move}px)`;
       }
     },
-    { passive: true },
-  );
+    { passive: false },
+  ); // ✨ 핵심: preventDefault를 쓰려면 passive를 false로 해야 합니다.
 
   stack.addEventListener("touchend", (e) => {
     if (!currentCard) return;
     let move = e.changedTouches[0].clientY - startY;
 
-    // 위로 100px 이상 쓸어 올렸을 때 다음 카드로 넘김
     if (move < -100) {
       currentCard.style.transition =
         "transform 0.3s ease-out, opacity 0.3s ease-out";
@@ -193,10 +197,9 @@ if (stack) {
         });
       }, 300);
     } else {
-      // 덜 올렸으면 원상복구
       currentCard.style.transition = "transform 0.3s ease-out";
       currentCard.style.transform = "";
     }
-    currentCard = null; // 터치 종료 후 초기화
+    currentCard = null;
   });
 }
