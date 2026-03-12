@@ -593,14 +593,13 @@ header.scrolled .lang-menu {
   }
 
   /* 개별 카드 크기 고정 (사라짐 방지) */
+  /* 개별 카드 크기 고정 (방어막 해제) */
   .card {
     position: absolute !important;
     width: 280px !important;
     height: 380px !important;
     border-radius: 40px !important;
     display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
   }
 
   /* 카드 계단식 배열 */
