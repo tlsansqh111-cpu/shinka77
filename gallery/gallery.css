@@ -214,7 +214,7 @@ header.scrolled .lang-menu {
 .project-section::before {
   content: "";
   position: absolute;
-  top: -160px;
+  top: -10px;
   left: 0;
   width: 100%;
   height: 400px;
@@ -503,4 +503,8 @@ header.scrolled .lang-menu {
   .panel-content {
     padding: 25px;
   }
+}
+.project-section::before {
+  top: -100px; /* 기존 -200px에서 조절: 위로 너무 많이 침범하지 않게 내림 */
+  height: 250px; /* 기존 400px에서 조절: 그라데이션이 퍼지는 길이를 모바일에 맞게 축소 */
 }
