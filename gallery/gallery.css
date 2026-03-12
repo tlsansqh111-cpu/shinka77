@@ -37,7 +37,6 @@ header nav {
   align-items: center;
   transition: all 0.5s ease;
 }
-
 header nav a {
   text-decoration: none;
   color: #666666;
@@ -266,7 +265,6 @@ header.scrolled .lang-menu {
   height: 260px;
 }
 
-/* ✨ 핵심 수정: 브라우저 기본 이미지 드래그를 막아야 슬라이드 가능! */
 .row img,
 .video-placeholder {
   height: 100%;
@@ -277,11 +275,8 @@ header.scrolled .lang-menu {
   pointer-events: auto !important;
   cursor: pointer;
   flex-shrink: 0;
-
-  /* 고스트 이미지 끌림 방지 (드래그 활성화의 핵심) */
   -webkit-user-drag: none;
   user-select: none;
-
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
@@ -322,10 +317,11 @@ header.scrolled .lang-menu {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 150px;
+  height: 200px;
   background: linear-gradient(
     to bottom,
     rgba(164, 225, 255, 0) 0%,
+    rgba(164, 225, 255, 1) 77%,
     rgba(164, 225, 255, 1) 100%
   );
   pointer-events: none;
@@ -404,13 +400,20 @@ header.scrolled .lang-menu {
 .panel-content {
   padding: 40px;
 }
+
+/* ✨ 핵심 수정: 자바스크립트가 직접 컨트롤 하도록 기본 숨김 처리 */
 .panel-img {
+  display: none;
   width: 100%;
   border-radius: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
   object-fit: cover;
 }
+.panel-video {
+  display: none;
+}
+
 .panel-desc h3 {
   font-size: 1.4rem;
   color: #1a237e;
@@ -422,11 +425,6 @@ header.scrolled .lang-menu {
   color: #444;
 }
 
-.panel-img.active,
-.panel-video.active {
-  display: block !important;
-}
-
 /* ==========================================
    5. 모바일 반응형 (화면 폭 768px 이하)
 ========================================== */
@@ -434,7 +432,6 @@ header.scrolled .lang-menu {
   .gallery-main {
     padding-bottom: 120px;
   }
-
   header {
     padding: 10px 0;
   }
