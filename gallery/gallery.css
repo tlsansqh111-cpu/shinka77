@@ -491,7 +491,7 @@ header.scrolled .lang-menu {
   }
 
   .project-section::before {
-    top: -100px;
+    top: -70px;
     height: 270px;
   }
 
