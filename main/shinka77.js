@@ -14,7 +14,10 @@ if (stack) {
     e.preventDefault();
     currentCard = stack.querySelector(".card:first-child");
     startY = e.clientY;
-    currentCard.style.transition = "none";
+    // touchmove 이벤트 안쪽
+    currentCard.style.transform = `translateY(${move}px) rotate(${move / 30}deg)`;
+    // touchend 이벤트 안쪽 (-80px 이상 올렸을 때)
+    currentCard.style.transform = `translateY(-300px) scale(0.8) rotate(-15deg)`;
     document.onmousemove = drag;
     document.onmouseup = stopDrag;
   });
