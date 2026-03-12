@@ -133,3 +133,90 @@ galleryMedia.forEach((media) => {
 // X 버튼이나 어두운 배경 누르면 닫기
 if (closeBtn) closeBtn.addEventListener("click", closePanel);
 if (panelOverlay) panelOverlay.addEventListener("click", closePanel);
+// ==========================================
+// 1. 헤더 스크롤 이벤트 (갤러리 페이지)
+// ==========================================
+const header = document.querySelector("header");
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 150) {
+    header.classList.add("scrolled");
+  } else {
+    header.classList.remove("scrolled");
+  }
+});
+
+// ==========================================
+// 2. 다국어 드롭다운 및 번역 로직 (갤러리 페이지)
+// ==========================================
+const langBtn = document.querySelector(".lang-btn");
+const langMenu = document.querySelector(".lang-menu");
+
+if (langBtn && langMenu) {
+  langBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    langMenu.classList.toggle("active");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!langBtn.contains(e.target) && !langMenu.contains(e.target)) {
+      langMenu.classList.remove("active");
+    }
+  });
+}
+
+// 번역 데이터 (메인과 동일)
+const translations = {
+  en: {
+    home: "Home",
+    about: "about",
+    gallery: "Gallery",
+    portfolio: "PolitPolio",
+    language: "Language",
+  },
+  ko: {
+    home: "홈",
+    about: "소개",
+    gallery: "갤러리",
+    portfolio: "포트폴리오",
+    language: "언어",
+  },
+  ja: {
+    home: "ホーム",
+    about: "紹介",
+    gallery: "ギャラリー",
+    portfolio: "ポートフォリオ",
+    language: "言語",
+  },
+  zh: {
+    home: "首页",
+    about: "关于",
+    gallery: "画廊",
+    portfolio: "作品集",
+    language: "语言",
+  },
+};
+
+const langOptions = document.querySelectorAll(".lang-menu a");
+const i18nElements = document.querySelectorAll("[data-i18n]");
+
+function applyLanguage(lang) {
+  i18nElements.forEach((el) => {
+    const key = el.getAttribute("data-i18n");
+    if (translations[lang] && translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+}
+
+const savedLang = localStorage.getItem("selectedLang") || "en";
+applyLanguage(savedLang);
+
+langOptions.forEach((option) => {
+  option.addEventListener("click", (e) => {
+    e.preventDefault();
+    const selectedLang = e.currentTarget.getAttribute("data-lang");
+    localStorage.setItem("selectedLang", selectedLang);
+    applyLanguage(selectedLang);
+    if (langMenu) langMenu.classList.remove("active");
+  });
+});
