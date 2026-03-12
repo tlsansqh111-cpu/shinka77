@@ -506,8 +506,8 @@ header.scrolled .lang-menu {
 }
 .project-section::before {
   top: -100px; /* 기존 -200px에서 조절: 위로 너무 많이 침범하지 않게 내림 */
-  height: 232px; /* 기존 400px에서 조절: 그라데이션이 퍼지는 길이를 모바일에 맞게 축소 */
+  height: 233px; /* 기존 400px에서 조절: 그라데이션이 퍼지는 길이를 모바일에 맞게 축소 */
 }
 .gallery-main {
-  padding-bottom: 150px; /* 기존 300px에서 모바일에 맞게 대폭 축소 */
+  padding-bottom: 200px; /* 기존 300px에서 모바일에 맞게 대폭 축소 */
 }
