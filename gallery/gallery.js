@@ -1,140 +1,5 @@
-const slider = document.getElementById("projectContainer");
-let isDown = false;
-let startX;
-let scrollLeft;
-
-// 마우스 누를 때
-slider.addEventListener("mousedown", (e) => {
-  isDown = true;
-  slider.style.cursor = "grabbing";
-  // 클릭한 X 좌표 기록
-  startX = e.pageX - slider.offsetLeft;
-  // 현재 스크롤 위치 기록
-  scrollLeft = slider.scrollLeft;
-});
-
-// 마우스가 영역을 벗어날 때
-slider.addEventListener("mouseleave", () => {
-  isDown = false;
-  slider.style.cursor = "grab";
-});
-
-// 마우스를 뗄 때
-slider.addEventListener("mouseup", () => {
-  isDown = false;
-  slider.style.cursor = "grab";
-});
-
-// 마우스를 움직일 때 (드래그)
-slider.addEventListener("mousemove", (e) => {
-  if (!isDown) return; // 클릭하지 않은 상태면 무시
-  e.preventDefault();
-  // 이동한 거리 계산
-  const x = e.pageX - slider.offsetLeft;
-  const walk = (x - startX) * 2; // 스크롤 속도 조절 (2배속)
-  // 실제 스크롤 이동 적용
-  slider.scrollLeft = scrollLeft - walk;
-});
 // ==========================================
-// ✨ 갤러리 슬라이드 패널 로직 (드래그 vs 클릭 완벽 구분 + MP4 지원)
-// ==========================================
-const galleryMedia = document.querySelectorAll(".row img, .row video");
-const panelOverlay = document.querySelector(".panel-overlay");
-const slidePanel = document.querySelector(".slide-panel");
-const closeBtn = document.querySelector(".close-btn");
-const panelTitle = document.querySelector(".panel-title");
-const panelImg = document.querySelector(".panel-img");
-const panelVideo = document.querySelector(".panel-video");
-const panelText = document.getElementById("panel-text");
-
-// 패널 열기 함수
-function openPanel(titleText, mediaSrc, mediaType) {
-  if (!slidePanel) return; // HTML이 없으면 에러 방지
-
-  panelTitle.textContent = titleText;
-  panelText.textContent =
-    titleText +
-    " 프로젝트의 상세 설명입니다. 멋진 비하인드 스토리를 적어보세요!";
-
-  // 미디어가 비디오(MP4)일 때
-  if (mediaType === "VIDEO") {
-    if (panelImg) panelImg.style.display = "none"; // 이미지 숨김
-    if (panelVideo) {
-      panelVideo.src = mediaSrc;
-      panelVideo.style.display = "block"; // 비디오 켬
-      panelVideo.play();
-    }
-  }
-  // 미디어가 이미지(JPG, PNG 등)일 때
-  else {
-    if (panelVideo) {
-      panelVideo.style.display = "none"; // 비디오 숨김
-      panelVideo.pause();
-    }
-    if (panelImg) {
-      panelImg.src = mediaSrc;
-      panelImg.style.display = "block"; // 이미지 켬
-    }
-  }
-
-  // 패널 화면에 등장
-  panelOverlay.classList.add("active");
-  slidePanel.classList.add("active");
-  document.body.style.overflow = "hidden"; // 배경 스크롤 방지
-}
-
-// 패널 닫기 함수
-function closePanel() {
-  if (panelOverlay) panelOverlay.classList.remove("active");
-  if (slidePanel) slidePanel.classList.remove("active");
-  document.body.style.overflow = "";
-  if (panelVideo) panelVideo.pause(); // 닫을 때 영상 정지
-}
-
-// 마우스(터치) 시작 좌표를 저장할 변수
-let clickStartX = 0;
-let clickStartY = 0;
-
-galleryMedia.forEach((media) => {
-  // 드래그 시 고스트 이미지 생기는 것 방지
-  media.addEventListener("dragstart", (e) => e.preventDefault());
-
-  // 1. 마우스를 누르는 순간의 좌표 기억!
-  media.addEventListener("mousedown", (e) => {
-    clickStartX = e.clientX;
-    clickStartY = e.clientY;
-  });
-
-  // 2. 마우스를 뗄 때(클릭) 좌표 비교
-  media.addEventListener("click", (e) => {
-    // 누른 곳과 뗀 곳의 거리 차이 계산
-    const diffX = Math.abs(e.clientX - clickStartX);
-    const diffY = Math.abs(e.clientY - clickStartY);
-
-    // ✨ 핵심: 마우스가 5픽셀 이상 미끄러졌으면 '드래그'로 간주하고 무시!
-    if (diffX > 5 || diffY > 5) {
-      return;
-    }
-
-    // 진짜 클릭일 때만 아래 코드 실행
-    const mediaType = media.tagName;
-    const title = media.getAttribute("alt") || "Gallery Project";
-
-    let mediaSrc = media.src;
-    if (!mediaSrc && mediaType === "VIDEO") {
-      const sourceTag = media.querySelector("source");
-      if (sourceTag) mediaSrc = sourceTag.src;
-    }
-
-    openPanel(title, mediaSrc, mediaType);
-  });
-});
-
-// X 버튼이나 어두운 배경 누르면 닫기
-if (closeBtn) closeBtn.addEventListener("click", closePanel);
-if (panelOverlay) panelOverlay.addEventListener("click", closePanel);
-// ==========================================
-// 1. 헤더 스크롤 이벤트 (갤러리 페이지)
+// 1. 헤더 스크롤 이벤트
 // ==========================================
 const header = document.querySelector("header");
 window.addEventListener("scroll", () => {
@@ -146,7 +11,7 @@ window.addEventListener("scroll", () => {
 });
 
 // ==========================================
-// 2. 다국어 드롭다운 및 번역 로직 (갤러리 페이지)
+// 2. 다국어 드롭다운 및 번역 로직
 // ==========================================
 const langBtn = document.querySelector(".lang-btn");
 const langMenu = document.querySelector(".lang-menu");
@@ -164,7 +29,6 @@ if (langBtn && langMenu) {
   });
 }
 
-// 번역 데이터 (메인과 동일)
 const translations = {
   en: {
     home: "Home",
@@ -220,3 +84,130 @@ langOptions.forEach((option) => {
     if (langMenu) langMenu.classList.remove("active");
   });
 });
+
+// ==========================================
+// 3. 갤러리 하단 커스텀 터치 바 & 팝업 패널 로직
+// ==========================================
+const slider = document.getElementById("projectContainer");
+const scrollTrack = document.querySelector(".custom-scrollbar-track");
+const scrollThumb = document.querySelector(".custom-scrollbar-thumb");
+const galleryItems = document.querySelectorAll(".row img, .row video");
+const panelOverlay = document.querySelector(".panel-overlay");
+const slidePanel = document.getElementById("galleryPanel");
+const closeBtn = document.querySelector(".close-btn");
+const panelImg = document.querySelector(".panel-img");
+const panelVideo = document.querySelector(".panel-video");
+
+let isDraggingThumb = false;
+let startX;
+let startScrollLeft;
+
+// --- 커스텀 스크롤 막대 드래그 엔진 ---
+if (scrollThumb && slider && scrollTrack) {
+  // 마우스 클릭 시
+  scrollThumb.addEventListener("mousedown", (e) => {
+    isDraggingThumb = true;
+    startX = e.clientX;
+    startScrollLeft = slider.scrollLeft;
+    document.body.style.userSelect = "none";
+  });
+
+  // 모바일 터치 시
+  scrollThumb.addEventListener(
+    "touchstart",
+    (e) => {
+      isDraggingThumb = true;
+      startX = e.touches[0].clientX;
+      startScrollLeft = slider.scrollLeft;
+    },
+    { passive: true },
+  );
+
+  // 이동 처리
+  const handleMove = (e) => {
+    if (!isDraggingThumb) return;
+    e.preventDefault();
+
+    const clientX = e.type.includes("mouse") ? e.clientX : e.touches[0].clientX;
+    const walk = clientX - startX;
+
+    const trackWidth = scrollTrack.clientWidth - scrollThumb.clientWidth;
+    const scrollableWidth = slider.scrollWidth - slider.clientWidth;
+
+    const walkPercentage = walk / trackWidth;
+    slider.scrollLeft = startScrollLeft + walkPercentage * scrollableWidth;
+  };
+
+  document.addEventListener("mousemove", handleMove);
+  document.addEventListener("touchmove", handleMove, { passive: false });
+
+  // 드래그 종료
+  const handleUp = () => {
+    isDraggingThumb = false;
+    document.body.style.userSelect = "";
+  };
+
+  document.addEventListener("mouseup", handleUp);
+  document.addEventListener("touchend", handleUp);
+
+  // 스크롤 위치에 맞춰 막대기 위치 동기화
+  const updateThumbPosition = () => {
+    const scrollPercentage =
+      slider.scrollLeft / (slider.scrollWidth - slider.clientWidth);
+    const maxThumbLeft = scrollTrack.clientWidth - scrollThumb.clientWidth;
+    scrollThumb.style.transform = `translateX(${scrollPercentage * maxThumbLeft}px)`;
+  };
+
+  slider.addEventListener("scroll", updateThumbPosition);
+  window.addEventListener("resize", updateThumbPosition);
+}
+
+// --- 우측 팝업 패널 열기/닫기 기능 ---
+function openGalleryPanel(src, isVideoItem) {
+  if (!slidePanel) return;
+
+  if (isVideoItem) {
+    panelVideo.src = src;
+    panelVideo.classList.add("active");
+    panelImg.classList.remove("active");
+  } else {
+    panelImg.src = src;
+    panelImg.classList.add("active");
+    panelVideo.classList.remove("active");
+  }
+
+  panelOverlay.classList.add("active");
+  slidePanel.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeGalleryPanel() {
+  if (panelOverlay) panelOverlay.classList.remove("active");
+  if (slidePanel) slidePanel.classList.remove("active");
+  document.body.style.overflow = "";
+
+  if (panelVideo) {
+    panelVideo.pause();
+    panelVideo.src = "";
+  }
+}
+
+// 개별 이미지/비디오 클릭 이벤트
+galleryItems.forEach((item) => {
+  item.addEventListener("click", () => {
+    const isVideoItem = item.tagName.toLowerCase() === "video";
+    let src = "";
+
+    if (isVideoItem) {
+      const source = item.querySelector("source");
+      src = source ? source.src : item.src;
+    } else {
+      src = item.src;
+    }
+
+    openGalleryPanel(src, isVideoItem);
+  });
+});
+
+if (closeBtn) closeBtn.addEventListener("click", closeGalleryPanel);
+if (panelOverlay) panelOverlay.addEventListener("click", closeGalleryPanel);

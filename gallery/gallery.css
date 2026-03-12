@@ -17,7 +17,7 @@ body {
 }
 
 /* ==========================================
-   1. 공통 헤더 스타일 (메인 페이지 완벽 통일 & 마우스 호버 정상화)
+   1. 공통 헤더 스타일 (슬림 캡슐 & 마우스 호버)
 ========================================== */
 header {
   position: fixed;
@@ -38,7 +38,6 @@ header nav {
   transition: all 0.5s ease;
 }
 
-/* ✨ 기본 상태: 평소엔 회색, 마우스를 올리면 예쁜 흰색 */
 header nav a {
   text-decoration: none;
   color: #666666;
@@ -50,13 +49,12 @@ header nav a:hover {
   color: #ffffff;
 }
 
-/* 스크롤 시 변형되는 세로 동그라미 헤더 */
 header.scrolled {
   top: 50%;
   left: 30px;
   transform: translateY(-50%);
   width: auto;
-  padding: 40px 25px;
+  padding: 25px 20px;
   background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
   border-radius: 50px;
@@ -64,18 +62,16 @@ header.scrolled {
 }
 header.scrolled nav {
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 }
-
-/* ✨ 스크롤 내린 상태 (하얀 캡슐): 평소엔 진회색, 마우스를 올리면 진한 남색 */
 header.scrolled nav a {
   color: #333333;
+  font-size: 1rem;
 }
 header.scrolled nav a:hover {
   color: #1a237e;
 }
 
-/* 다국어 언어 드롭다운 */
 .lang-dropdown {
   position: relative;
   display: flex;
@@ -94,6 +90,7 @@ header.scrolled nav a:hover {
 }
 header.scrolled .lang-btn {
   color: #333333;
+  font-size: 1rem;
 }
 header.scrolled .lang-btn:hover {
   color: #1a237e;
@@ -146,7 +143,7 @@ header.scrolled .lang-menu {
 }
 
 /* ==========================================
-   2. 갤러리 메인 컨텐츠 (슬로건 & 비디오 포커스)
+   2. 갤러리 메인 컨텐츠
 ========================================== */
 .gallery-main {
   width: 100%;
@@ -206,7 +203,7 @@ header.scrolled .lang-menu {
 }
 
 /* ==========================================
-   3. 하단 프로젝트 영역 (가로 스크롤 갤러리)
+   3. 하단 프로젝트 영역 (가로 스크롤 & 터치 바)
 ========================================== */
 .project-section {
   position: relative;
@@ -214,7 +211,6 @@ header.scrolled .lang-menu {
   z-index: 1;
 }
 
-/* 투명 그라데이션 배경 (아래가 흰색, 위가 투명) */
 .project-section::before {
   content: "";
   position: absolute;
@@ -242,8 +238,14 @@ header.scrolled .lang-menu {
   text-transform: lowercase;
 }
 
-.scroll-container:active {
-  cursor: grabbing;
+.scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scroll-container::-webkit-scrollbar {
+  display: none;
 }
 
 .scroll-rows {
@@ -253,15 +255,12 @@ header.scrolled .lang-menu {
   width: max-content;
   padding: 40px;
 }
-
-/* 가로 자동 늘어남, 세로 260px 고정 */
 .row {
   display: flex;
   gap: 20px;
   height: 260px;
 }
 
-/* ✨ 핵심: 클릭 효과 및 호버 적용 (비디오 포함) */
 .row img,
 .row video {
   height: 100%;
@@ -308,13 +307,40 @@ header.scrolled .lang-menu {
   font-weight: bold;
 }
 
-/* 화면 제일 아래 하늘색 그라데이션 자연스럽게 마무리 */
+/* ✨ 커스텀 터치 스크롤 바 디자인 */
+.custom-scrollbar-track {
+  width: 80%;
+  max-width: 600px;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  margin: 40px auto 0;
+  position: relative;
+  z-index: 20;
+}
+.custom-scrollbar-thumb {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  height: 10px;
+  width: 120px;
+  background-color: #0c3851;
+  border-radius: 10px;
+  cursor: grab;
+  transition: background-color 0.2s;
+}
+.custom-scrollbar-thumb:active {
+  cursor: grabbing;
+  background-color: #1a237e;
+}
+
+/* ✨ 하단 하늘색 페이드 아웃 효과 (위치 복구) */
 .bottom-fade {
   position: absolute;
-  bottom: 0;
+  bottom: 60px; /* ✨ 핵심: 터치 막대가 생긴 만큼 위로 다시 끌어올림! */
   left: 0;
   width: 100%;
-  height: 150px;
+  height: 180px; /* 그라데이션이 사진에 부드럽게 스며들도록 높이도 살짝 키움 */
   background: linear-gradient(
     to bottom,
     rgba(164, 225, 255, 0) 0%,
@@ -325,7 +351,7 @@ header.scrolled .lang-menu {
 }
 
 /* ==========================================
-   4. 슬라이드 패널 디자인 (클릭 시 우측 팝업)
+   4. 슬라이드 패널 디자인 (우측 팝업)
 ========================================== */
 .panel-overlay {
   position: fixed;
@@ -369,7 +395,7 @@ header.scrolled .lang-menu {
   justify-content: space-between;
   align-items: center;
   padding: 30px 40px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #eeeeee;
   background: #fff;
   position: sticky;
   top: 0;
@@ -414,7 +440,6 @@ header.scrolled .lang-menu {
   color: #444;
 }
 
-/* 자바스크립트에서 켤 때 사용하는 클래스 */
 .panel-img.active,
 .panel-video.active {
   display: block !important;
@@ -422,9 +447,10 @@ header.scrolled .lang-menu {
 
 /* ==========================================
    5. 모바일 반응형 (화면 폭 768px 이하)
+   ✨ 사이즈 및 비율 최적화 완료
 ========================================== */
 @media (max-width: 768px) {
-  /* 모바일 헤더 (상단 캡슐 모양) */
+  /* 1) 모바일 헤더: 작고 슬림하게 중앙 정렬 */
   header {
     padding: 15px 0;
   }
@@ -439,7 +465,7 @@ header.scrolled .lang-menu {
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
-    padding: 15px 20px;
+    padding: 12px 20px;
     border-radius: 30px;
     flex-direction: row;
     justify-content: space-between;
@@ -449,31 +475,85 @@ header.scrolled .lang-menu {
     gap: 10px;
   }
 
-  /* 모바일 포커스 섹션 세로 배치 */
+  /* 2) 메인 슬로건: 글자 크기 줄이고 여백 축소 */
+  .main-slogan {
+    margin: 120px auto 80px auto;
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0 20px; /* 양옆이 폰 화면에 닿지 않게 여백 추가 */
+  }
+
+  /* 3) 중앙 포커스 섹션: 가로 배치를 세로 배치로 변경 */
   .focus-section {
-    flex-direction: column;
+    flex-direction: column; /* 세로로 탑 쌓기 */
     gap: 30px;
     padding: 0 20px;
+    margin-bottom: 80px;
   }
   .text-left,
   .text-right {
-    text-align: center;
-    font-size: 1.2rem;
+    text-align: center; /* 모바일에선 텍스트 무조건 중앙 정렬 */
+    font-size: 1.1rem;
   }
+  /* ✨ 핵심: 중앙 비디오 사이즈를 폰 화면 가로폭에 맞게 1:1 비율로 축소 */
   .center-image-wrapper {
     width: 100%;
     max-width: 320px;
     height: 320px;
   }
 
-  /* 모바일 슬라이드 패널 꽉 차게 */
+  /* 4) 하단 갤러리 영역: 사진 세로 높이 축소 */
+  .project-title {
+    margin-top: 60px;
+    margin-bottom: 30px;
+    font-size: 1rem;
+  }
+  .scroll-rows {
+    padding: 0 20px 20px 20px;
+    gap: 15px;
+  }
+
+  /* ✨ 핵심: PC에서 260px이던 사진 높이를 폰 화면에 답답하지 않게 180px로 다이어트 */
+  .row {
+    height: 180px;
+    gap: 15px;
+  }
+  .video-placeholder {
+    width: 260px;
+  } /* 비디오 임시 박스도 폰 비율에 맞춰 축소 */
+
+  /* 5) 커스텀 스크롤 바 & 그라데이션 모바일 위치 조정 */
+  .custom-scrollbar-track {
+    margin-top: 20px;
+    width: 90%;
+  }
+  .bottom-fade {
+    bottom: 40px;
+    height: 120px;
+  } /* 막대기가 올라온 만큼 그라데이션도 위치 수정 */
+
+  /* 6) 우측 팝업 패널: 모바일 화면 꽉 차게 변경 */
   .slide-panel {
     width: 100%;
   }
   .panel-header {
-    padding: 20px 25px;
+    padding: 15px 20px;
+  }
+  .panel-title {
+    font-size: 1.3rem;
   }
   .panel-content {
-    padding: 25px;
+    padding: 20px;
+  }
+  .panel-img,
+  .panel-video {
+    border-radius: 15px;
+    margin-bottom: 20px;
+  }
+  .panel-desc h3 {
+    font-size: 1.2rem;
+  }
+  .panel-desc p {
+    font-size: 1rem;
   }
 }
