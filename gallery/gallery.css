@@ -491,8 +491,9 @@ header.scrolled .lang-menu {
   }
 
   .project-section::before {
-    top: -150px;
+    top: -100px;
     height: 270px;
+    margin-top: 50px;
   }
 
   .project-title {
