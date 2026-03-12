@@ -741,3 +741,8 @@ header.scrolled .lang-menu {
     padding: 25px;
   }
 }
+.footer {
+  height: 400px;
+  background-color: #7899a6;
+  margin-top: 100px;
+}
