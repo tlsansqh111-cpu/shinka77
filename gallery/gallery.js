@@ -86,11 +86,9 @@ langOptions.forEach((option) => {
 });
 
 // ==========================================
-// 3. 갤러리 하단 커스텀 터치 바 & 팝업 패널 로직
+// 3. 갤러리 다이렉트 드래그 & 팝업 패널 로직
 // ==========================================
 const slider = document.getElementById("projectContainer");
-const scrollTrack = document.querySelector(".custom-scrollbar-track");
-const scrollThumb = document.querySelector(".custom-scrollbar-thumb");
 const galleryItems = document.querySelectorAll(".row img, .row video");
 const panelOverlay = document.querySelector(".panel-overlay");
 const slidePanel = document.getElementById("galleryPanel");
@@ -98,68 +96,36 @@ const closeBtn = document.querySelector(".close-btn");
 const panelImg = document.querySelector(".panel-img");
 const panelVideo = document.querySelector(".panel-video");
 
-let isDraggingThumb = false;
+let isDown = false;
+let isDragging = false;
 let startX;
-let startScrollLeft;
+let scrollLeft;
 
-// --- 커스텀 스크롤 막대 드래그 엔진 ---
-if (scrollThumb && slider && scrollTrack) {
-  // 마우스 클릭 시
-  scrollThumb.addEventListener("mousedown", (e) => {
-    isDraggingThumb = true;
-    startX = e.clientX;
-    startScrollLeft = slider.scrollLeft;
-    document.body.style.userSelect = "none";
+// --- 다이렉트 드래그 엔진 (PC 마우스 전용, 모바일은 CSS로 부드럽게 자동 스크롤) ---
+if (slider) {
+  slider.addEventListener("mousedown", (e) => {
+    isDown = true;
+    isDragging = false;
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
   });
 
-  // 모바일 터치 시
-  scrollThumb.addEventListener(
-    "touchstart",
-    (e) => {
-      isDraggingThumb = true;
-      startX = e.touches[0].clientX;
-      startScrollLeft = slider.scrollLeft;
-    },
-    { passive: true },
-  );
+  slider.addEventListener("mouseleave", () => {
+    isDown = false;
+  });
 
-  // 이동 처리
-  const handleMove = (e) => {
-    if (!isDraggingThumb) return;
+  slider.addEventListener("mouseup", () => {
+    isDown = false;
+  });
+
+  slider.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    isDragging = true;
     e.preventDefault();
-
-    const clientX = e.type.includes("mouse") ? e.clientX : e.touches[0].clientX;
-    const walk = clientX - startX;
-
-    const trackWidth = scrollTrack.clientWidth - scrollThumb.clientWidth;
-    const scrollableWidth = slider.scrollWidth - slider.clientWidth;
-
-    const walkPercentage = walk / trackWidth;
-    slider.scrollLeft = startScrollLeft + walkPercentage * scrollableWidth;
-  };
-
-  document.addEventListener("mousemove", handleMove);
-  document.addEventListener("touchmove", handleMove, { passive: false });
-
-  // 드래그 종료
-  const handleUp = () => {
-    isDraggingThumb = false;
-    document.body.style.userSelect = "";
-  };
-
-  document.addEventListener("mouseup", handleUp);
-  document.addEventListener("touchend", handleUp);
-
-  // 스크롤 위치에 맞춰 막대기 위치 동기화
-  const updateThumbPosition = () => {
-    const scrollPercentage =
-      slider.scrollLeft / (slider.scrollWidth - slider.clientWidth);
-    const maxThumbLeft = scrollTrack.clientWidth - scrollThumb.clientWidth;
-    scrollThumb.style.transform = `translateX(${scrollPercentage * maxThumbLeft}px)`;
-  };
-
-  slider.addEventListener("scroll", updateThumbPosition);
-  window.addEventListener("resize", updateThumbPosition);
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    slider.scrollLeft = scrollLeft - walk;
+  });
 }
 
 // --- 우측 팝업 패널 열기/닫기 기능 ---
@@ -192,9 +158,15 @@ function closeGalleryPanel() {
   }
 }
 
-// 개별 이미지/비디오 클릭 이벤트
+// 개별 이미지/비디오를 클릭했을 때
 galleryItems.forEach((item) => {
-  item.addEventListener("click", () => {
+  item.addEventListener("click", (e) => {
+    // 마우스를 끌고 있는 중이었다면 패널이 열리지 않도록 차단
+    if (isDragging) {
+      e.preventDefault();
+      return;
+    }
+
     const isVideoItem = item.tagName.toLowerCase() === "video";
     let src = "";
 
