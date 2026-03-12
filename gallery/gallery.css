@@ -446,7 +446,7 @@ header.scrolled .lang-menu {
     top: 15px;
     left: 50%;
     transform: translateX(-50%);
-    width: 92%;
+    width: 100%;
     max-width: 100vw;
     padding: 10px 15px;
     border-radius: 30px;
