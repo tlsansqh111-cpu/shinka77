@@ -496,7 +496,7 @@ header.scrolled .lang-menu {
 
   /* 사진 스크롤 영역 모바일화 (260px -> 180px) */
   .project-title {
-    margin-top: 60px;
+    margin-top: 70px;
     margin-bottom: 30px;
     font-size: 1rem;
   }
@@ -514,7 +514,7 @@ header.scrolled .lang-menu {
 
   /* 하단 그라데이션 다이어트 */
   .bottom-fade {
-    height: 100px;
+    height: 150px;
     bottom: 0;
   }
 
