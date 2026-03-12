@@ -432,7 +432,7 @@ header.scrolled .lang-menu {
 ========================================== */
 @media (max-width: 768px) {
   .gallery-main {
-    padding-bottom: 100px;
+    padding-bottom: 120px;
   }
 
   header {
@@ -492,7 +492,7 @@ header.scrolled .lang-menu {
 
   .project-section::before {
     top: -100px;
-    height: 250px;
+    height: 270px;
   }
 
   .project-title {
